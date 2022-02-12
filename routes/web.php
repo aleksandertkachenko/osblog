@@ -21,4 +21,5 @@ Route::get('/', [PostController::class, 'index'])->name('listposts');
 
 Route::get('/create', [PostController::class, 'create'])->name('createpost');
 Route::post('/store', [PostController::class, 'store'])->name('storepost');
+Route::delete('/destroy/{id}', [PostController::class, 'destroy'])->name('destroypost');
 

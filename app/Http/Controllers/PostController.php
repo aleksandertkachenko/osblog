@@ -35,6 +35,12 @@ class PostController extends Controller
    
     public function store(Request $request) {
 
+        $validated = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'text' => 'required',
+            //'image' => ''
+        ]);
+
         $post = new Posts();
         $post->title = $request->input('title');
         $post->text = $request->input('text');
@@ -50,5 +56,9 @@ class PostController extends Controller
 
     public function destroy($id) {
         // .....
+
+        Posts::destroy($id);
+
+        return redirect()->route('listposts')->with('success', 'Post deleted');
     }
 }

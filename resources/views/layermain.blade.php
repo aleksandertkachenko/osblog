@@ -55,6 +55,7 @@
         </div>
         @endif
 
+
       </div>
     </div>
   </section>
@@ -67,12 +68,25 @@
           <div class="row">
             <div class="col">
               
-              <form class="form-inline my-2 my-lg-0" action="{{ route('listposts') }}">
+              <form class="form-inline" action="{{ route('listposts') }}">
                   @csrf
-                  <input class="form-control mr-sm-2" type="search" name="textsearch"
-                         placeholder="search title post..." value="{{ $textsearch ?? ''  }}" aria-label="Search">
-                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                  
+
+                  <div class="input-group mb-3">
+                    <input type="search" class="form-control" placeholder="search title post..." name="textsearch" aria-label="search title post..." aria-describedby="basic-addon2" value="{{ $textsearch ?? ''  }}">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </div>
+                  </div>
+
+
+                  
+
+
               </form>
+
+
+
 
             </div>
           </div>

@@ -3,6 +3,18 @@
 
 @section('content')
 
+    
+
+    @if ($posts->isEmpty())
+
+        
+        <div class="alert alert-warning align-items-center alert-dismissible mt-4" role="alert">            
+            Nothing found
+        </div>
+    @endif
+        
+    
+
     @foreach ($posts as $post)
        <div class="col">
           <div class="card shadow-sm">
@@ -13,23 +25,30 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                   
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Del</button>
+                  
+                   <form action="{{ route('destroypost', $post->id) }}" method="post">
+                          @method('DELETE')
+                          @csrf
+                    <input type="submit" class="btn btn-danger" value="Delete"/>
+                     
+                    </form> 
+
+
+
                 </div>
                 <small class="text-muted">{{$post->created_at}}</small>
               </div>
             </div>
           </div>
         </div>
+
+    
+         
+
     @endforeach
             
 
-    @empty($posts)
-        <div class="col">
-          <div class="card shadow-sm">
-             Not posts
-          </div>
-        </div>
-    @endempty
+    
 
 
 @endsection
