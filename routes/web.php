@@ -15,4 +15,10 @@ use App\Http\Controllers\PostController;
 */
 
 
-Route::get('/', [PostController::class, 'index']);
+Route::get('/', [PostController::class, 'index'])->name('listposts');
+
+
+
+Route::get('/create', [PostController::class, 'create'])->name('createpost');
+Route::post('/store', [PostController::class, 'store'])->name('storepost');
+

@@ -7,10 +7,48 @@ use App\Models\Posts;
 
 class PostController extends Controller
 {
-    //
+    
+    public function index(Request $request) {
+        $posts = Posts::orderBy('created_at', 'DESC');
 
-    public function index() {
-        $posts = Posts::all();
-        return view('listposts',['posts'=>$posts]);
+        $this->validate($request, [
+            'textsearch' => 'string|min:3|max:64',
+        ]);
+
+        $textsearch = $request->input('textsearch');
+
+        if (isset($textsearch)) {
+            $posts = $posts->where('title', 'like', '%'.$textsearch.'%')->get();
+        }
+        else {
+            $posts = $posts->get();
+        }
+
+        $data = ['posts'=>$posts,'textsearch'=>$textsearch];
+        return view('listposts',$data);
+    }
+
+    public function create() {
+        return view('createpost');
+    }
+
+   
+    public function store(Request $request) {
+
+        $post = new Posts();
+        $post->title = $request->input('title');
+        $post->text = $request->input('text');
+        //$image = $request->file('image');
+        //if ($image) {
+        //    $path = Storage::putFile('public', $image);
+        //    $post->image = Storage::url($path);
+        //}
+        $post->save();
+
+        return redirect()->route('listposts')->with('success', 'Post added');
+    }
+
+    public function destroy($id) {
+        // .....
     }
 }
