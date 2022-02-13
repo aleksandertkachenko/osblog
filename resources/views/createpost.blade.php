@@ -21,7 +21,7 @@
       @endif
 
          <div class="row">
-          <form action="{{ route('storepost') }}" method="post">
+          <form action="{{ route('storepost') }}" method="post" enctype=multipart/form-data>
             @csrf
             <div class="form-group">
               <label for="exampleFormControlInput1">Title</label>

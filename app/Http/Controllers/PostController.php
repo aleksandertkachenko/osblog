@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -38,24 +39,23 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|unique:posts|max:255',
             'text' => 'required',
-            //'image' => ''
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
 
         $post = new Posts();
         $post->title = $request->input('title');
         $post->text = $request->input('text');
-        //$image = $request->file('image');
-        //if ($image) {
-        //    $path = Storage::putFile('public', $image);
-        //    $post->image = Storage::url($path);
-        //}
+        $image = $request->file('image');
+        if ($image) {
+            $path = Storage::putFile('public', $image);
+            $post->image = Storage::url($path);
+        }
         $post->save();
-
-        return redirect()->route('listposts')->with('success', 'Post added');
+        return redirect()->route('listposts')->with('success', "Post added");
     }
 
     public function destroy($id) {
-        // .....
+        
 
         Posts::destroy($id);
 
